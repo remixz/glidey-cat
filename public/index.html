@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title> Glidey Cat </title>
+    <style>
+        body {
+            background-image: url('assets/linedpaper.png');
+            margin-top: 50px;
+        }
+
+        canvas {
+            margin: 0 auto;
+        }
+
+        .credits {
+            font-family: sans-serif;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            text-transform: uppercase;
+            font-size: 10px;
+            color: #000000;
+            list-style: none;
+            margin: 0;
+            text-align: right;
+        }
+
+        .credits a {
+            color: black;
+        }
+
+        .bar {
+            display: none;
+        }
+
+        .title img {
+            display: block;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+
+        @media only screen and (max-width: 480px), only screen and (max-device-width: 480px), only screen and (-webkit-min-device-pixel-ratio: 2) {
+            body {
+                margin: 0;
+            }
+
+            .desktop {
+                display: none;
+            }
+
+            canvas {
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <ul class="credits desktop">
+        <li>Created by:</li>
+        <li><a href="http://zachbruggeman.me" target="_blank">Zach Bruggeman</a> - Programming</li>
+        <li><a href="http://meloedm.bandcamp.com" target="_blank">Trenton Metlewsky</a> - Sound Design</li>
+        <li>Steven Chew - Voiceovers</li>
+        <li>Jacob Bond - Ideas</li>
+        <li>Georgia Townsend - Ideas</li>
+        <li>Many others - Playtesting</li>
+        <li>Art from <a href="http://www.glitchthegame.com/" target="_blank">Tiny Speck's Glitch</a></li>
+    </ul>
+</body>
+<script src="js/phaser.min.js"></script>
+<!--<script src="js/phaser.js"></script>-->
+<script src="js/game.js"></script>
+<script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Boogaloo::latin' ] },
+    active: function () { init(); }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+</html>

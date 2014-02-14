@@ -1,0 +1,21 @@
+{
+  "name": "glidey-cat",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remixz/glidey-cat.git"
+  },
+  "author": "Zach Bruggeman <mail@bruggie.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/remixz/glidey-cat/issues"
+  },
+  "homepage": "http://zachbruggeman.me/glidey-cat",
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "gulp-browserify": "~0.4.4",
+    "gulp-uglify": "~0.2.1",
+    "gulp-connect": "~0.3.1"
+  }
+}
