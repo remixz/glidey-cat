@@ -195,8 +195,8 @@ module.exports = function () {
         game.tweens.remove(flappyTween);
         title.destroy();
         startLevelButton.destroy();
-        itemSelector.visible = false;
-        countGroup.visible = false;
+        if (itemSelector) itemSelector.visible = false;
+        if (countGroup) countGroup.visible = false;
         scoreText.visible = true;
         levelText.visible = false;
 
