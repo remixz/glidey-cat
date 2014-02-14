@@ -60,4 +60,10 @@ module.exports = function () {
 
     var shop = game.add.button(game.world.centerX - 200 / 2, 375, 'shop_button', onShopAction, this, 1, 0, 2);
     shop.scale.setTo(0.75, 0.75);
+
+    // debug
+    window.resetGame = function () {
+        store.clear();
+        location.reload();
+    }
 }
