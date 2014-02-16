@@ -225,6 +225,7 @@ module.exports = function () {
                     scoreText.x = Math.floor(game.world.centerX - scoreText.width / 2);
                     if (storage.pipesPassed % 3 === 0) game.sound.play('robotastic');
                     game.sound.play('ding');
+                    rook.kill();
                 })
             }, 700)
         }
