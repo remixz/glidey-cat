@@ -2,6 +2,7 @@ var store = require('store');
 
 module.exports = function () {
     var game = this.game;
+    game.stage.backgroundColor = '#15d8ea';
 
     var music = game.add.audio('menu_music', 1, true);
     music.play('', 0, 1, true);
@@ -62,8 +63,20 @@ module.exports = function () {
     shop.scale.setTo(0.75, 0.75);
 
     // debug
+    console.log('Console upgrade bought!');
+    console.log('Wait... you didn\'t pay for this.');
+    console.log('SECURITY!');
+    console.log('--------------------------------');
+    console.log('Hi! If you\'re trying to hack your score... it\'s not that hard. There are some debug commands here too.');
+    console.log('COMMANDS:');
+    console.log('resetGame() - Resets everything, including current level, high score, and inventory.');
+    console.log('makeBoss() - Sets the current level to 10 to test boss level.');
     window.resetGame = function () {
         store.clear();
         location.reload();
+    }
+    window.makeBoss = function () {
+        store.set('current_level', 10);
+        console.log('Level set to 10, boss level ready.')
     }
 }

@@ -8,6 +8,12 @@ module.exports = function () {
     var inv = store.get('inventory');
     var currentPowerup;
     storage.pipePadding = 500;
+    game.stage.backgroundColor = '#15d8ea';
+
+    var level = store.get('current_level');
+    if (level % 10 === 0 && level !== 0) {
+        storage.isBoss = true;
+    }
 
     storage.score = 0;
     storage.pipesPassed = 0;
@@ -127,15 +133,6 @@ module.exports = function () {
         var x = (i * 300) + 300;
         storage.createPipeSet(x, i);
     }
-    storage.y = 0; // for new pipes
-
-    /*storage.bird = game.add.sprite(game.world.centerX, 176, 'bird');
-    var bird = storage.bird;
-    bird.anchor = new Phaser.Point(0.5, 0.5);
-    bird.scale.setTo(0.15, 0.15);
-    bird.body.collideWorldBounds = true;
-    bird.body.setPolygon(16,0 , 116,-16 , 68,-16 , 68,-32 , 32,-32 , 32,-52 , 16,-52 , 16,-84 , 0,-84 , 0,-120 , 16,-120 , 16,-136 , 52,-136 , 52,-156 , 68,-156 , 68,-172 , 100,-172 , 100,-188 , 188,-188 , 188,-172 , 204,-172 , 204,-156 , 224,-156 , 224,-136 , 240,-136 , 240,-68 , 256,-68 , 256,-52 , 240,-52 , 240,-16 , 224,-16 , 224,0);
-    bird.body.translate(0, 188);*/
 
     storage.cats = game.add.group();
 
@@ -150,7 +147,12 @@ module.exports = function () {
 
     var flappyTween = game.add.tween(cat).to({y: 186}, 400, Phaser.Easing.Circular.InOut, true, 0, Number.MAX_VALUE, true)
 
-    var title = game.add.sprite(35, 85, 'tap_to_fly');
+    if (storage.isBoss) {
+        var title = game.add.sprite(50, 100, 'boss_level');
+        game.stage.backgroundColor = '#543658';
+    } else {
+        var title = game.add.sprite(35, 85, 'tap_to_fly');
+    }
     var levelText = game.add.text(0, 30, 'Level ' + store.get('current_level') , { font: '32px Boogaloo', fill: '#ffffff', stroke: '#000000', strokeThickness: 5 });
     levelText.x = Math.floor(game.world.centerX - levelText.width / 2);
 
@@ -166,8 +168,6 @@ module.exports = function () {
         cat.body.velocity.y = -300;
         rotateTween = game.add.tween(cat).to({angle: -15}, 200, Phaser.Easing.Linear.None, true)
         .to({angle: 0}, 200, Phaser.Easing.Linear.None, true);
-        //rotateTween = game.add.tween(cat).to({angle: -30}, 100, Phaser.Easing.Linear.None, true)
-          //                                .to({angle: 90}, 350, Phaser.Easing.Linear.None, true, 500);
 
         if (currentPowerup) {
             if (currentPowerup.affect.how === 'function' && !currentPowerup.affect.once) {
@@ -188,6 +188,7 @@ module.exports = function () {
         }
     }
 
+    storage.rooks = game.add.group();
     var preGameTap = function () {
         cat.body.acceleration.y = 800;
         storage.pipes.setAll('body.velocity.x', -200);
@@ -200,9 +201,42 @@ module.exports = function () {
         scoreText.visible = true;
         levelText.visible = false;
 
+        var doBoss = function () {
+            storage.pipes.removeAll();
+
+            var horse = game.add.sprite(100, 350, 'horse');
+            horse.scale.setTo(0.5, 0.5);
+            horse.animations.add('ahh');
+            horse.animations.play('ahh', 40, true);
+
+            storage.interval = setInterval(function () {
+                var rook = storage.rooks.create(350, 0, 'rook');
+                rook.anchor.setTo(0.5, 0.5);
+                rook.scale.setTo(0.25, 0.25);
+                rook.y = storage.cat.y;
+                rook.body.velocity.x = -700;
+                //rook.body.velocity.y = game.rnd.integerInRange(-300, 300)
+                rook.events.onOutOfBounds.add(function () {
+                    if (rook.x > 0) return;
+                    if (storage.ended) return;
+                    storage.score += 1;
+                    storage.pipesPassed += 1;
+                    scoreText.content = storage.score;
+                    scoreText.x = Math.floor(game.world.centerX - scoreText.width / 2);
+                    if (storage.pipesPassed % 3 === 0) game.sound.play('robotastic');
+                    game.sound.play('ding');
+                })
+            }, 700)
+        }
+
+        if (storage.isBoss && store.get('current_level') !== 10) doBoss(); 
+
         if (store.get('current_level') === 1) {
             storage.createPopup('Hey! Welcome to Glidey\nCat. My name\'s Dew. I\nused to run this show,\nbefore that damn cat came\nin. Now I\'m your tour guide!');
-            return;
+        } else if (store.get('current_level') === 3) {
+            storage.createPopup('Did you know you\ncan buy powerups?\nThey\'re in the store,\nand help you beat the game!');
+        } else if (store.get('current_level') === 10) {
+            storage.createPopup('Uh oh, it\'s your first\n boss level!\nGet ready, they\'re a doozy!', doBoss)
         }
 
         var index = '' + game.rnd.integerInRange(0, 7);
@@ -356,6 +390,7 @@ module.exports = function () {
     }
 
     storage.onHit = function (player, pipe) {
+        if (storage.isBoss) clearInterval(storage.interval);
         var rnd = game.rnd.integerInRange(1, 3);
         if (pipe.gold) {
             glide.play('golden_glide' + rnd);
@@ -377,7 +412,7 @@ module.exports = function () {
         game.input.onDown.remove(gameTap);
         storage.ended = true;
 
-        if (storage.score > store.get('high_score')) {
+        if (storage.score > store.get('high_score') && !storage.isBoss) {
             store.set('high_score', storage.score);
             newHighScore = true;
         } 

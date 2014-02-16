@@ -28,6 +28,8 @@ module.exports = function () {
     game.load.image('item_speed', 'assets/item_speed.png');
     game.load.image('item_padding', 'assets/item_padding.png');
     game.load.image('not_enough', 'assets/not_enough.png');
+    game.load.image('rook', 'assets/rook.png');
+    game.load.image('boss_level', 'assets/boss_level.png');
 
     game.load.spritesheet('play_button', 'assets/play_button.png', 266, 105);
     game.load.spritesheet('shop_button', 'assets/shop_button.png', 266, 105);
@@ -41,6 +43,7 @@ module.exports = function () {
     game.load.spritesheet('shop_menu_button', 'assets/shop_menu_button.png', 89, 43);
     game.load.spritesheet('start_level', 'assets/start_level.png', 226, 80);
     game.load.spritesheet('mute', 'assets/mute.png', 30, 34);
+    game.load.spritesheet('horse', 'assets/horse.png', 191, 202, 93);
 
     game.load.audio('ding', ['assets/ding.mp3', 'assets/ding.ogg']);
     game.load.audio('glide', ['assets/GLIDE.mp3', 'assets/GLIDE.ogg']);
@@ -49,4 +52,5 @@ module.exports = function () {
     game.load.audio('shop_music', ['assets/shop_music.mp3', 'assets/shop_music.ogg']);
     game.load.audio('boop', ['assets/boop.mp3', 'assets/boop.ogg']);
     game.load.audio('boom', ['assets/boom.mp3', 'assets/boom.ogg']);
+    game.load.audio('robotastic', ['assets/robotastic.mp3', 'assets/robotastic.ogg']);
 }
