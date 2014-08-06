@@ -233,7 +233,7 @@ module.exports = function () {
         if (storage.isBoss && store.get('current_level') !== 10) doBoss(); 
 
         if (store.get('current_level') === 1) {
-            storage.createPopup('Hey! Welcome to Glidey\nCat. My name\'s Dew. I\nused to run this show,\nbefore that damn cat came\nin. Now I\'m your tour guide!');
+            storage.createPopup('Hey! Welcome to Glidey\nCat. My name\'s Dew. I\nused to run this show,\nbefore that glidey cat came\nin. Now I\'m your tour guide!');
         } else if (store.get('current_level') === 3) {
             storage.createPopup('Did you know you\ncan buy powerups?\nThey\'re in the store,\nand help you beat the game!');
         } else if (store.get('current_level') === 10) {

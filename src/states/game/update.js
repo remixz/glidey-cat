@@ -5,7 +5,7 @@ module.exports = function () {
     var storage = this.storage;
     var cat = storage.cats;
 
-    game.physics.overlap(cat, storage.ground, storage.onHit, storage.hitCheck);
+    game.physics.collide(cat, storage.ground, storage.onHit, storage.hitCheck);
 
     if (!storage.isBoss) {
         game.physics.overlap(cat, storage.pipes, storage.onHit, storage.hitCheck);
